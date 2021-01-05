@@ -10,13 +10,13 @@ const KiB = 1024;
 
 const config = {
   // https://webpack.js.org/configuration/mode/
-  // mode: "development",
+  mode: "development",
 
   // each entry point indicates a module which webpack should use to begin building out its internal dependency graph
   // Define multiple entry points
   entry: {
     // Produce bundle.js starting inside index.js
-    main: path.resolve(__dirname, "src/index.js"),
+    bundle: path.resolve(__dirname, "src/index.js"),
 
     // Create separate bundle in vendor.js
     // (put dependencies that won't often as frequently as application code here)
@@ -34,6 +34,15 @@ const config = {
     publicPath: "build/",
   },
 
+  // ATTEMPT 1:
+  /*optimization: {
+    splitChunks: {
+      chunks: "all"
+    }
+  },*/
+
+  // Other fuckery that don't do shit
+  /*
   optimization: {
     splitChunks: {
       /*cacheGroups: {
@@ -41,7 +50,7 @@ const config = {
           test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
           chunks: "all",
         },
-      },*/
+      },
       chunks: "all",
     },
   },
