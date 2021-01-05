@@ -20,7 +20,7 @@ const config = {
 
     // Create separate bundle in vendor.js
     // (put dependencies that won't often as frequently as application code here)
-    // vendor: VENDOR_LIBS,
+    // vendor: VENDOR_LIBS,cc
   },
   output: {
     // Output directory for webpack build - mandatory absolute path
@@ -112,6 +112,21 @@ const config = {
   },
   // Maps bundle.js -> original source, as separate files
   devtool: "source-map",
+
+  optimization: {
+    runtimeChunk: "single",
+    splitChunks: {
+      chunks: "all",
+      maxInitialRequests: Infinity,
+      minSize: 0,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor'
+        },
+      },
+    },
+  },
 };
 
 module.exports = config;
