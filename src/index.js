@@ -1,10 +1,11 @@
 import React from "react";
 import { render } from "react-dom";
+import App from "./app";
 import sum from "./sum";
 
-render(<h1>Hello, World!</h1>, document.getElementById("root"));
+// Make root component hot-exported
+render(<App />, document.getElementById("root"));
 
-sum(5,6);
 const button = document.createElement("BUTTON");
 button.innerText = "Click me!";
 button.onclick = () => {

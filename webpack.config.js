@@ -1,3 +1,5 @@
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 
@@ -16,7 +18,7 @@ const config = {
   // Define multiple entry points
   entry: {
     // Produce bundle.js starting inside index.js
-    bundle: path.resolve(__dirname, "src/index.js"),
+    bundle: ["react-hot-loader/patch", path.resolve(__dirname, "src/index.js")],
 
     // Create separate bundle in vendor.js
     // (put dependencies that won't often as frequently as application code here)
@@ -24,22 +26,38 @@ const config = {
   },
   output: {
     // Output directory for webpack build - mandatory absolute path
-    path: path.resolve(__dirname, "build"),
+    // dist (distribution) - "minified/concatenated version, used on productions sites"
+    path: path.resolve(__dirname, "dist"),
 
     // Name of output bundle (written to output.path)
     // Replace name with key from entry section i.e. bundle.js, vendor.js
-    filename: "[name].js",
+    filename: "[name].[contenthash].js",
 
     // Prepends output.publicPath to URL of loaders
-    publicPath: "build/",
+    // Where I uploaded my bundled files (absolute path or relative to main HTML file)
+    publicPath: "",
   },
 
-  // ATTEMPT 1:
-  /*optimization: {
+  resolve: {
+    alias: {
+      "react-dom": "@hot-loader/react-dom",
+    },
+  },
+
+  optimization: {
+    //runtimeChunk: "single",
     splitChunks: {
-      chunks: "all"
-    }
-  },*/
+      chunks: "all",
+      /* maxInitialRequests: Infinity,
+      minSize: 0,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendor'
+        },
+      },*/
+    },
+  },
 
   // Other fuckery that don't do shit
   /*
@@ -72,6 +90,15 @@ const config = {
       name: "vendor",
     }),
     */
+    // All files inside output.path will be removed
+    new CleanWebpackPlugin(),
+
+    // Generate HTML5 that includes all webpack bundles
+    new HtmlWebpackPlugin({
+      // title: "I used HtmlWebpackPlugin",
+      favicon: "src/assets/favicon.ico",
+      template: "src/index.html",
+    }),
 
     // Does not work with hot reload?
     new MiniCssExtractPlugin(),
@@ -110,22 +137,26 @@ const config = {
       },
     ],
   },
+
+  // Specify display information on build
+  stats: {
+    cachedAssets: true,
+    children: false,
+    colors: true,
+    entrypoints: false,
+    modules: false,
+  },
+
   // Maps bundle.js -> original source, as separate files
   devtool: "source-map",
 
-  optimization: {
-    runtimeChunk: "single",
-    splitChunks: {
-      chunks: "all",
-      maxInitialRequests: Infinity,
-      minSize: 0,
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendor'
-        },
-      },
-    },
+  // Development time!
+  devServer: {
+    // Automatically open browser
+    open: true,
+
+    // Hot-module replacement duh!
+    hot: true,
   },
 };
 
