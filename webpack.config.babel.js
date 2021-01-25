@@ -1,7 +1,7 @@
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const path = require("path");
+import { CleanWebpackPlugin } from "clean-webpack-plugin";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import path from "path";
 
 const KiB = 1024;
 
@@ -160,4 +160,4 @@ const config = {
   },
 };
 
-module.exports = config;
+export default config;
