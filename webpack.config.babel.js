@@ -59,29 +59,6 @@ const config = {
     },
   },
 
-  // Other fuckery that don't do shit
-  /*
-  optimization: {
-    splitChunks: {
-      /*cacheGroups: {
-        commons: {
-          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-          chunks: "all",
-        },
-      },
-      chunks: "all",
-    },
-  },
-  /*   cacheGroups: {
-        vendor: {
-          test: /node_modules/,
-          name: "vendor",
-          enforce: true,
-          chunks: "all",
-        },
-      },
-    },*/
-
   plugins: [
     /* DEPRECATED, instead use optimization.splitChunks
     // Remove duplicate dependencies
@@ -90,6 +67,7 @@ const config = {
       name: "vendor",
     }),
     */
+
     // All files inside output.path will be removed
     new CleanWebpackPlugin(),
 
